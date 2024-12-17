@@ -21,4 +21,45 @@ public class ProductoServiceImpl implements ProductoService {
 		return productoRepository.findByProveedor(proveedor);
 	}
 
+	@Override
+	public Producto insertarProducto(Producto producto) {
+		return productoRepository.save(producto);
+	
+	}
+
+	@Override
+	public Producto ActualizarProducto(Producto producto) {
+		Producto productoExistente = productoRepository.findById(producto.getId())
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + producto.getId()));
+
+        productoExistente.setNombre(producto.getNombre());
+        productoExistente.setDescripcion(producto.getDescripcion());
+        productoExistente.setImagen(producto.getImagen());
+        productoExistente.setStock(producto.getStock());
+        productoExistente.setPrecioVenta(producto.getPrecioVenta());
+        productoExistente.setPrecioCosto(producto.getPrecioCosto());
+        productoExistente.setProveedor(producto.getProveedor());
+
+        return productoRepository.save(productoExistente);
+	}
+
+	@Override
+	public void eliminarProducto(Integer idProducto) {
+		Producto producto = productoRepository.findById(idProducto)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + idProducto));
+
+        productoRepository.delete(producto);
+		
+	}
+
+	@Override
+	public List<Producto> listarTodosProductos() {
+		return productoRepository.findAll();
+	}
+
+	@Override
+	public List<Producto> buscarProductoPorNombre(String nombre) {
+		return productoRepository.findByNombreStartingWithIgnoreCase(nombre);
+	}
+
 }

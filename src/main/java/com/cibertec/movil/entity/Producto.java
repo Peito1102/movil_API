@@ -1,7 +1,7 @@
 package com.cibertec.movil.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
@@ -42,7 +42,6 @@ public class Producto {
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idProveedor")
-	@JsonIgnore
     private Proveedor proveedor;
 }
 
